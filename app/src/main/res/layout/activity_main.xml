@@ -16,24 +16,38 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
-            android:layout_height="493dp"
+            android:layout_height="356dp"
             android:contentDescription="TODO"
             app:srcCompat="@drawable/s04" />
 
         <TextView
             android:id="@+id/backText"
             android:layout_width="match_parent"
-            android:layout_height="46dp"
+            android:layout_height="36dp"
             android:text="back_value:0"
             android:textAlignment="center"
             android:textSize="32sp" />
 
-        <Button
-            android:id="@+id/mainButton"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="166dp"
-            android:text="Start"
-            android:textSize="32sp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/mainButton1"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:text="Start"
+                android:textSize="32sp" />
+
+            <Button
+                android:id="@+id/mainButton2"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:text="STOP"
+                android:textSize="32sp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

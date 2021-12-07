@@ -3,7 +3,6 @@ package com.cookandroid.timeimageviewer;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,11 +14,11 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    int back_value=0;
     TextView backText;
     Handler handler = new Handler();
     ImageView imageView;
     ArrayList<Drawable> List = new ArrayList<>();
+    BackGround Thread = new BackGround();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +29,20 @@ public class MainActivity extends AppCompatActivity {
         List.add(getDrawable(R.drawable.s03));
         imageView = (ImageView) findViewById(R.id.imageView);
         backText = (TextView) findViewById(R.id.backText);
-        Button mainButton = (Button) findViewById(R.id.mainButton);
+        Button mainButton1 = (Button) findViewById(R.id.mainButton1);
+        Button mainButton2 = (Button) findViewById(R.id.mainButton2);
 
-        mainButton.setOnClickListener(new View.OnClickListener() {
+        mainButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BackGround newThread = new BackGround();
-                newThread.start();
+                Thread = new BackGround();
+                Thread.start();
+            }
+        });
+        mainButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Thread.interrupt();
             }
         });
 
@@ -45,13 +51,15 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void run(){
             int index =0;
-            while(true){
+            int back_value=0;
+            while(!isInterrupted()){
                 final Drawable drawable = List.get(index%List.size());
+                int Back_value = back_value;
                 handler.post(new Runnable(){
                     @Override
                     public void run() {
                         imageView.setImageDrawable(drawable);
-                        backText.setText("back_value:"+back_value);
+                        backText.setText("back_value:"+ Back_value);
                     }
                 });
                 index++;
@@ -59,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
                 try{
                     Thread.sleep(1000);
                 } catch (InterruptedException e){
+                    e.printStackTrace();
+                    return;
+                } catch (Exception e){
                     e.printStackTrace();
                 }
             }
